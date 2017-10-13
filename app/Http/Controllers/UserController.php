@@ -4,9 +4,22 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use App\Services\ExampleService;
 
 class UserController extends Controller
 {
+ 
+    protected $exampleService;
+
+    public function __construct(ExampleService $exampleService)
+    {
+        $this->exampleService = $exampleService;
+    }
+
+    public function test()
+    {
+        return $this->exampleService->example();
+    }
 
     public function index(){
         $users = User::all()->toArray();

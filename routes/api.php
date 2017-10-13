@@ -32,4 +32,7 @@ Route::post('/chapters/create', 'ChapterController@store');
 Route::put('/chapters/{id}', 'ChapterController@update');
 Route::delete('/chapters/{id}', 'ChapterController@destroy');
 
+/* Testing Route */
+Route::get('test', 'UserController@test');
+
 
