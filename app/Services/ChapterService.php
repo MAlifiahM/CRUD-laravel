@@ -1,4 +1,5 @@
 <?php
+namespace App\Services;
 
 use App\Chapter;
 use Illuminate\Http\Request;

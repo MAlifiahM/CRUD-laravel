@@ -1,23 +1,25 @@
 <?php
+namespace App\Services;
 
 use App\User;
 use Illuminate\Http\Request;
 
-class UserService {
+class UserService{
 
-    public function index(){
+    public function getAllUsers(){
         $users = User::all()->toArray();
         return response()->json([$users]);
     }
 
-    public function store(Request $request){
+    public function createNewUser(Request $request){
         $users = $request->all();
         User::create($users);
         return response()->json(['user created']);
     }
 
-    public function update($id, Request $request){
+    public function updateUser($id, Request $request){
         $user = User::find($id);
+
         $data = $request->all();
         $user->name= $data['name'];
         $user->email= $data['email'];
@@ -26,7 +28,7 @@ class UserService {
         return response()->json(['message' => 'user edited'], 200);
     }
 
-    public function destroy($id){
+    public function deleteUser($id){
         $user = User::find($id);
         $user->delete();
         return response()->json(['message' => 'user deleted'], 200);

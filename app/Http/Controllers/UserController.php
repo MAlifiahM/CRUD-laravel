@@ -4,54 +4,37 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
-use App\Services\ExampleService;
+use App\Services\UserService;
 
 class UserController extends Controller
 {
- 
-    protected $exampleService;
-
-    public function __construct(ExampleService $exampleService)
+    
+    protected $userService;
+    
+    public function __construct(UserService $userService)
     {
-        $this->exampleService = $exampleService;
+        $this->userService = $userService;
     }
 
-    public function test()
+    public function user()
     {
-        return $this->exampleService->example();
+        return $this->userService->user();
     }
 
     public function index(){
-        $users = User::all()->toArray();
-
-        return response()->json($users);
-        // return ('users.index', compact('users'));
+       return $this->userService->getAllUsers();
     }
     
     public function store(Request $request){
-        $users = $request->all();
-        
-        User::create($users);
-
-        return response()->json([
-            'message' => 'user created'
-        ], 200);
+        return $this->userService->createNewUser($request);
     }
 
 
     public function update(Request $request, $id){
-        $user = User::find($id);
-        $data = $request->all();
-        $user->name= $data['name'];
-        $user->email= $data['email'];
-        $user->password = $data['password'];
-        $user->save();
-        return response()->json(['message' => 'user edited'], 200);
+        return $this->userService->updateUser($id, $request);
     }
 
     public function destroy($id){
-        $user = User::find($id);
-        $user->delete();
-        return response()->json(['message' => 'user deleted'], 200);
+        return $this->userService->deleteUser($id);
     }
 }
