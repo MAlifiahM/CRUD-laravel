@@ -5,34 +5,39 @@ namespace App\Http\Controllers;
 use App\Manga;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Services\MangaService;
 
 class MangaController extends Controller
 {
-    public function index(){
-        $mangas = Manga::all()->toArray();
-        return response()->json($mangas);        
+    protected $mangaServices;
+
+    public function __construct(MangaService $mangaService)
+    {
+        $this->mangaService = $mangaService;
+    }
+
+    public function manga()
+    {
+        return $this->mangaService->manga();
+    }
+
+    public function index()
+    {
+        return $this->mangaService->getAllMangas();      
     }
     
-    public function store(Request $request){
-        $mangas = $request->all();
-        Manga::create($mangas);
-
-        return response()->json(['message'=>'manga created'], 200);
+    public function store(Request $request)
+    {
+      return $this->mangaService->createNewManga($request);
     }
 
-    public function update($id, Request $request){
-        $manga = Manga::find($id);
-        $data = $request->all();
-        $manga->id_user= $data['id_user'];
-        $manga->title= $data['title'];
-        $manga->genre= $data['genre'];
-        $manga->save();
-        return response()->json(['message'=>'manga updated'], 200);        
+    public function update($id, Request $request)
+    {
+        return $this->mangaService->updateManga($id, $request);
     }
 
-    public function destroy($id){
-        $manga = Manga::find($id);
-        $manga->delete();
-        return response()->json(['message'=>'manga deleted'], 200);
+    public function destroy($id)
+    {
+       return $this->mangaService->deleteManga($id);
     }
 }
