@@ -4,33 +4,35 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Chapter;
+use App\Services\ChapterService;
 
 class ChapterController extends Controller
 {
+    protected $chapterService;
+
+    public function __construct(ChapterService $chapterService)
+    {
+        $this->chapterService = $chapterService;
+    }
+
+    public function chapter()
+    {
+        return $this->chapterService->chapter();
+    }
+
     public function index(){
-        $chapters = Chapter::all()->toArray();
-        return response()->json($chapters);
+        return $this->chapterService->getAllChapters();
     }
 
     public function store(Request $request){
-        $chapters = $request->all();
-        Chapter::create($chapters);
-        return response()->json(['message' => 'chapter created'], 200);
+        return $this->chapterService->createNewChapter($request);
     }
 
     public function update($id, Request $request){
-        $chapter = Chapter::find($id);
-        $data = $request->all();
-        $chapter->id_manga = $data['id_manga'];
-        $chapter->title = $data['title'];
-        $chapter->pages = $data['pages'];
-        $chapter->save();
-        return response()->json(['message'=>'chapter updated'], 200);
+        return $this->chapterService->updateChapter($id, $request);
     }
 
     public function destroy($id){
-        $chapter = Chapter::find($id);
-        $chapter->delete();
-        return response()->json(['message'=>'chapter deleted'], 200);
+        return $this->chapterService->deleteChapter($id);
     }
 }
