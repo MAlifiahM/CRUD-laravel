@@ -14,7 +14,7 @@ class UserService{
     public function createNewUser(Request $request){
         $users = $request->all();
         User::create($users);
-        return response()->json(['user created']);
+        return response()->json(['message'=>'user created'], 200);
     }
 
     public function updateUser($id, Request $request){

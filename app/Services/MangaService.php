@@ -21,8 +21,8 @@ class MangaService {
         $manga = Manga::find($id);
         $data = $request->all();
         $manga->id_user= $data['id_user'];
-        $manga->title= $data['title'];
-        $manga->genre= $data['genre'];
+        $manga->title  = $data['title'];
+        $manga->genre  = $data['genre'];
         $manga->save();
         return response()->json(['message'=>'manga updated'], 200);        
     }

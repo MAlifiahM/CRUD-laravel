@@ -31,8 +31,10 @@ Route::get('/chapters', 'ChapterController@index');
 Route::post('/chapters/create', 'ChapterController@store');
 Route::put('/chapters/{id}', 'ChapterController@update');
 Route::delete('/chapters/{id}', 'ChapterController@destroy');
-
-/* Testing Route */
-Route::get('test', 'UserController@test');
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+Route::get('/{manga}/ch{chapter_id}', 'PageController@index');
+Route::post('/{manga}/ch{chapter_id}/create', 'PageController@store');
+Route::put('/{manga}/ch{chapter_id}/{id}', 'PageController@update');
+Route::delete('/{manga}/ch{chapter_id}/{id}', 'PageController@destroy');
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
